@@ -217,28 +217,31 @@ namespace Microsoft.Xna.Framework.Graphics
 
 		#region Public SetData Methods
 
-		public void SetData<T>(T[] data) where T : struct
+		public void SetData<T>(T[] data, SetDataOptions options = SetDataOptions.None) where T : struct
 		{
 			SetData(
 				0,
 				data,
 				0,
 				data.Length,
-				MarshalHelper.SizeOf<T>()
+				MarshalHelper.SizeOf<T>(),
+				options
 			);
 		}
 
 		public void SetData<T>(
 			T[] data,
 			int startIndex,
-			int elementCount
+			int elementCount,
+			SetDataOptions options = SetDataOptions.None
 		) where T : struct {
 			SetData(
 				0,
 				data,
 				startIndex,
 				elementCount,
-				MarshalHelper.SizeOf<T>()
+				MarshalHelper.SizeOf<T>(),
+				options
 			);
 		}
 
@@ -247,7 +250,8 @@ namespace Microsoft.Xna.Framework.Graphics
 			T[] data,
 			int startIndex,
 			int elementCount,
-			int vertexStride
+			int vertexStride,
+			SetDataOptions options = SetDataOptions.None
 		) where T : struct {
 			ErrorCheck(data, startIndex, elementCount, vertexStride);
 
@@ -261,7 +265,7 @@ namespace Microsoft.Xna.Framework.Graphics
 				elementCount,
 				elementSizeInBytes,
 				vertexStride,
-				SetDataOptions.None
+				options
 			);
 			handle.Free();
 		}

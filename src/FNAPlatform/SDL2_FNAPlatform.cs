@@ -287,10 +287,10 @@ namespace Microsoft.Xna.Framework
 				);
 			}
 
-			SDL.SDL_SetHint(
-				SDL.SDL_HINT_ORIENTATIONS,
-				"LandscapeLeft LandscapeRight Portrait"
-			);
+			// SDL.SDL_SetHint(
+			// 	SDL.SDL_HINT_ORIENTATIONS,
+			// 	"LandscapeLeft LandscapeRight Portrait"
+			// );
 
 			// We want to initialize the controllers ASAP!
 			SDL.SDL_Event[] evt = new SDL.SDL_Event[1];
@@ -1246,7 +1246,7 @@ namespace Microsoft.Xna.Framework
 					}
 				}
 
-				else if (evt.type == SDL.SDL_EventType.SDL_TEXTEDITING) 
+				else if (evt.type == SDL.SDL_EventType.SDL_TEXTEDITING)
 				{
 					int bytes = MeasureStringLength(evt.edit.text);
 					if (bytes > 0)
@@ -1478,6 +1478,10 @@ namespace Microsoft.Xna.Framework
 					return AppDomain.CurrentDomain.BaseDirectory;
 				}
 			}
+#if ANDROID
+			if (OSVersion.Equals("Android")) // FNA.NET use EXTERNAL_STORAGE as base path and assets will be copied there.
+				return Android.App.Application.Context.GetExternalFilesDir(null)!.AbsolutePath;
+#endif
 			string result = SDL.SDL_GetBasePath();
 			if (string.IsNullOrEmpty(result))
 			{
